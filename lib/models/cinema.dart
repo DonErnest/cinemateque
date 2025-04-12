@@ -13,12 +13,12 @@ class Movie {
 
   Movie({
     String? id,
-    int? rating,
     required this.poster,
     required this.name,
     required this.description,
     required this.year,
     this.watched = false,
+    this.rating
   }) : id = id ?? uuid.v4();
 }
 

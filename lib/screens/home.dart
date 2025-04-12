@@ -2,7 +2,7 @@ import 'package:cinemateque/models/cinema.dart';
 import 'package:cinemateque/widgets/canvas.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/prospective_movie.dart';
+import '../widgets/movie_tile.dart';
 
 class Home extends StatefulWidget {
   final List<Movie> movies;
