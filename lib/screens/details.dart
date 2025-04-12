@@ -18,6 +18,8 @@ class MovieDetails extends StatefulWidget {
 }
 
 class _MovieDetailsState extends State<MovieDetails> {
+  var descriptionScrollController = ScrollController();
+
 
   void ratingUpdated(String id, int? rating, bool watched) {
     setState(() {
@@ -60,9 +62,14 @@ class _MovieDetailsState extends State<MovieDetails> {
                 style: theme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              Text(
-                  widget.movie.description,
-                  style: theme.bodyLarge,
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: descriptionScrollController,
+                  child: Text(
+                      widget.movie.description,
+                      style: theme.bodyLarge,
+                  ),
+                ),
               ),
               Spacer(),
               SizedBox(

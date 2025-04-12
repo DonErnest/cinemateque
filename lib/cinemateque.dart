@@ -2,7 +2,7 @@ import 'package:cinemateque/models/cinema.dart';
 import 'package:cinemateque/widgets/canvas.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/add.dart';
+import 'screens/add_form.dart';
 import 'screens/details.dart';
 import 'widgets/movie_tile.dart';
 

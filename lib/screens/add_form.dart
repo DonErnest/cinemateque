@@ -73,6 +73,7 @@ class _AddMovieFormState extends State<AddMovieForm> {
                 Expanded(
                   child: TextField(
                     controller: nameController,
+                    maxLength: 25,
                     onChanged:
                         (value) => setState(() {
                           insertedName = value;
@@ -118,6 +119,7 @@ class _AddMovieFormState extends State<AddMovieForm> {
                         (value) => setState(() {
                           insertedDescription = value;
                         }),
+                    maxLength: 300,
                     maxLines: 5,
                     decoration: const InputDecoration(
                       label: Text("movie description"),

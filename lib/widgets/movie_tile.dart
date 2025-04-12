@@ -11,6 +11,7 @@ class MovieTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final customMovieLabelColors = Theme.of(context).extension<CustomColors>()!;
+    var textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: InkResponse(
@@ -55,9 +56,8 @@ class MovieTile extends StatelessWidget {
             child: Text(
               movie.name,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: textTheme.labelLarge!.copyWith(
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
                 color: customMovieLabelColors.movieLabelBoxText,
               ),
             ),
