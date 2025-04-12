@@ -12,8 +12,14 @@ class Cinemateque extends StatefulWidget {
 class _CinematequeState extends State<Cinemateque> {
   List<Movie> movies = sampledMovies;
 
+  void updateMoviesList(Movie newMovie) {
+    setState(() {
+      movies.add(newMovie);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Home(movies: movies);
+    return Home(movies: movies, onMovieAdded: updateMoviesList);
   }
 }

@@ -3,12 +3,14 @@ import 'package:cinemateque/widgets/canvas.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/movie_tile.dart';
+import 'add.dart';
 import 'details.dart';
 
 class Home extends StatefulWidget {
   final List<Movie> movies;
+  final void Function(Movie movie) onMovieAdded;
 
-  const Home({super.key, required this.movies});
+  const Home({super.key, required this.movies, required this.onMovieAdded});
 
   @override
   State<Home> createState() => _HomeState();
@@ -47,10 +49,23 @@ class _HomeState extends State<Home> {
     );
   }
 
+  void openAddMovieSheet() {
+    showModalBottomSheet(
+      context: context,
+      useSafeArea: true,
+      isScrollControlled: true,
+      builder:
+          (ctx) =>
+              Wrap(children: [AddMovieForm(saveMovie: widget.onMovieAdded)]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenCanvas(
-      appBarActions: [],
+      appBarActions: [
+        IconButton(onPressed: openAddMovieSheet, icon: Icon(Icons.add)),
+      ],
       bottomBar: NavigationBar(
         destinations: [
           NavigationDestination(
