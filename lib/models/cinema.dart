@@ -45,7 +45,7 @@ List<Movie> sampledMovies = [
   Movie(
     poster:
     "https://m.media-amazon.com/images/M/MV5BZTdmNDU1ZjktYzM3NC00ZDMwLWJiNzItNzE0MzAwYTk3NDNiXkEyXkFqcGc@._V1_.jpg",
-    name: "Il peccato – Il furore di Michelangelo",
+    name: "Il peccato",
     description: "Film about the life of Michelangelo",
     year: 2019,
   ),

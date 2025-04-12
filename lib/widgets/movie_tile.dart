@@ -21,6 +21,8 @@ class MovieTile extends StatelessWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.redAccent,
+                      border: Border.all(color: Colors.black, width: 2.0),
+                      boxShadow: [BoxShadow(spreadRadius: 0.5)],
                     ),
                     constraints: BoxConstraints(
                       minWidth: 40, // Minimum width
@@ -42,6 +44,10 @@ class MovieTile extends StatelessWidget {
                 )
                 : null,
         footer: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: Colors.amberAccent,
+          ),
           child: Text(
             movie.name,
             textAlign: TextAlign.center,
@@ -49,10 +55,6 @@ class MovieTile extends StatelessWidget {
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            color: Colors.amberAccent,
           ),
         ),
         child: Image.network(movie.poster),
