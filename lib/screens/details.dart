@@ -45,6 +45,7 @@ class _MovieDetailsState extends State<MovieDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context).textTheme;
     return ScreenCanvas(
       widgets: [
         Expanded(
@@ -52,22 +53,35 @@ class _MovieDetailsState extends State<MovieDetails> {
             children: [
               Image.network(widget.movie.poster),
               Divider(thickness: 3.0),
+              SizedBox(height: 20),
               Text(
                 widget.movie.name,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: theme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
-              Text(widget.movie.description),
+              Text(
+                  widget.movie.description,
+                  style: theme.bodyLarge,
+              ),
               Spacer(),
-              ElevatedButton(
-                onPressed: () {
-                  markMovieAsWatched(context);
-                },
-                child: Text(
-                  widget.movie.watched
-                      ? "Return to 'To be seen'"
-                      : "Mark as watched",
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    markMovieAsWatched(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 0),
+                    child: Text(
+                      widget.movie.watched
+                          ? "To be seen"
+                          : "Watched",
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

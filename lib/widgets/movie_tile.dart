@@ -1,6 +1,8 @@
 import 'package:cinemateque/models/cinema.dart';
 import 'package:flutter/material.dart';
 
+import '../theme/custom_colors.dart';
+
 class MovieTile extends StatelessWidget {
   final Movie movie;
   final void Function(String id) onMovieClicked;
@@ -8,7 +10,7 @@ class MovieTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final customMovieLabelColors = Theme.of(context).extension<CustomColors>()!;
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: InkResponse(
@@ -48,7 +50,7 @@ class MovieTile extends StatelessWidget {
           footer: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Colors.amberAccent,
+              color: customMovieLabelColors.movieLabelBox,
             ),
             child: Text(
               movie.name,
@@ -56,6 +58,7 @@ class MovieTile extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
+                color: customMovieLabelColors.movieLabelBoxText,
               ),
             ),
           ),
