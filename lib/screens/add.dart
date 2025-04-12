@@ -1,4 +1,5 @@
 import 'package:cinemateque/models/cinema.dart';
+import 'package:cinemateque/widgets/rating_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 
@@ -21,6 +22,8 @@ class _AddMovieFormState extends State<AddMovieForm> {
   final posterController = TextEditingController();
   final descriptionController = TextEditingController();
   final yearController = TextEditingController();
+
+  Set<int> movieRatingButtonSelection = <int>{};
 
   void onCanceled() {
     Navigator.pop(context);
@@ -47,6 +50,8 @@ class _AddMovieFormState extends State<AddMovieForm> {
           name: insertedName,
           description: insertedDescription,
           year: int.parse(insertedYear),
+          watched: movieRatingButtonSelection.isNotEmpty? true: false,
+          rating: movieRatingButtonSelection.isNotEmpty? movieRatingButtonSelection.first: null,
         );
         widget.saveMovie(newMovie);
         Navigator.pop(context);
@@ -117,6 +122,23 @@ class _AddMovieFormState extends State<AddMovieForm> {
                     decoration: const InputDecoration(
                       label: Text("movie description"),
                     ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: SegmentedButton<int>(
+                    segments: ratingOptions,
+                    selected: movieRatingButtonSelection,
+                    multiSelectionEnabled: false,
+                    emptySelectionAllowed: true,
+                    onSelectionChanged: (newSelection) {
+                      setState(() {
+                        movieRatingButtonSelection = newSelection;
+                      });
+                    },
                   ),
                 ),
               ],
