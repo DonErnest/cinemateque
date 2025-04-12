@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ScreenCanvas extends StatelessWidget {
-  final List<Widget> appBarActions;
-  final Widget bottomBar;
+  final List<Widget>? appBarActions;
+  final Widget? bottomBar;
   final List<Widget> widgets;
 
   const ScreenCanvas({
     super.key,
     required this.widgets,
-    required this.appBarActions,
-    required this.bottomBar,
+    this.appBarActions,
+    this.bottomBar,
   });
 
   @override

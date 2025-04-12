@@ -3,6 +3,7 @@ import 'package:cinemateque/widgets/canvas.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/movie_tile.dart';
+import 'details.dart';
 
 class Home extends StatefulWidget {
   final List<Movie> movies;
@@ -38,6 +39,14 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void showMovieDetails(String id) {
+    var movie = selectedMovies.firstWhere((movie) => movie.id == id);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (ctx) => MovieDetails(movie: movie)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenCanvas(
@@ -66,7 +75,10 @@ class _HomeState extends State<Home> {
               crossAxisCount: 2,
             ),
             itemBuilder:
-                (ctx, idx) => MovieTile(movie: selectedMovies[idx]),
+                (ctx, idx) => MovieTile(
+                  movie: selectedMovies[idx],
+                  onMovieClicked: showMovieDetails,
+                ),
           ),
         ),
       ],
