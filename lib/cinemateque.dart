@@ -1,4 +1,6 @@
+import 'package:cinemateque/app_routes.dart';
 import 'package:cinemateque/models/cinema.dart';
+import 'package:cinemateque/providers/cinemateque_provider.dart';
 import 'package:cinemateque/widgets/canvas.dart';
 import 'package:flutter/material.dart';
 
@@ -17,39 +19,24 @@ class Cinemateque extends StatefulWidget {
 }
 
 class _CinematequeState extends State<Cinemateque> {
-  List<Movie> movies = sampledMovies;
-
-  void updateMoviesList(Movie newMovie) {
-    setState(() {
-      movies.add(newMovie);
-      selectedMovies = getMovies(currentScreenIndex);
-    });
-  }
-
-  void updateMovieRating(String movieId, int? rating, bool watched) {
-    setState(() {
-      final movieIdx = movies.indexWhere((movie) => movie.id == movieId);
-      movies[movieIdx].rating = rating;
-      movies[movieIdx].watched = watched;
-      selectedMovies = getMovies(currentScreenIndex);
-    });
-  }
+  late CinematequeProvider movieProvider;
 
   int currentScreenIndex = 0;
   late List<Movie> selectedMovies;
 
   List<Movie> getMovies(int index) {
     if (currentScreenIndex == 0) {
-      return movies.where((movie) => !movie.watched).toList();
+      return movieProvider.newMovies;
     } else {
-      return movies.where((movie) => movie.watched).toList();
+      return movieProvider.watchedMovies;
     }
   }
 
   @override
-  void initState() {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    movieProvider = CinematequeProvider.of(context)!;
     selectedMovies = getMovies(currentScreenIndex);
-    super.initState();
   }
 
   void updateCurrentPageIndex(int newIndex) {
@@ -60,15 +47,7 @@ class _CinematequeState extends State<Cinemateque> {
   }
 
   void showMovieDetails(String id) {
-    var movie = selectedMovies.firstWhere((movie) => movie.id == id);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder:
-            (ctx) =>
-            MovieDetails(movie: movie, updateRating: updateMovieRating),
-      ),
-    );
+    Navigator.of(context).pushNamed(AppRoutes.movie, arguments: id);
   }
 
   void openAddMovieSheet() {
@@ -78,7 +57,7 @@ class _CinematequeState extends State<Cinemateque> {
       isScrollControlled: true,
       builder:
           (ctx) =>
-          Wrap(children: [AddMovieForm(saveMovie: updateMoviesList)]),
+          Wrap(children: [AddMovieForm(saveMovie: movieProvider.addNewMovie)]),
     );
   }
 

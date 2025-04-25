@@ -1,16 +1,12 @@
 import 'package:cinemateque/models/cinema.dart';
+import 'package:cinemateque/providers/cinemateque_provider.dart';
 import 'package:cinemateque/widgets/alert_rating_dialog.dart';
 import 'package:cinemateque/widgets/canvas.dart';
 import 'package:flutter/material.dart';
 
 class MovieDetails extends StatefulWidget {
-  final Movie movie;
-  final void Function(String id, int? rating, bool watched) updateRating;
-
   const MovieDetails({
     super.key,
-    required this.movie,
-    required this.updateRating,
   });
 
   @override
@@ -18,29 +14,33 @@ class MovieDetails extends StatefulWidget {
 }
 
 class _MovieDetailsState extends State<MovieDetails> {
+  late Movie movie;
+  late CinematequeProvider movieProvider;
+
   var descriptionScrollController = ScrollController();
 
-
-  void ratingUpdated(String id, int? rating, bool watched) {
-    setState(() {
-      widget.updateRating(id, rating, watched);
-    });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    movieProvider = CinematequeProvider.of(context)!;
+    final movieId = ModalRoute.of(context)!.settings.arguments as String;
+    movie = movieProvider.movies.firstWhere((movie) => movie.id == movieId);
   }
-  
+
   void markMovieAsWatched(BuildContext ctx) async {
-    if (!widget.movie.watched) {
+    if (!movie.watched) {
       return showDialog<void>(
         context: ctx,
         builder:
             (ctx) =>
             AlertRatingDialog(
-              movie: widget.movie,
-              onSave: ratingUpdated,
+              movie: movie,
+              onSave: movieProvider.rateMovie,
             ),
       );
     } else {
       setState(() {
-        widget.updateRating(widget.movie.id, null, false);
+        // widget.updateRating(widget.movie.id, null, false);
       });
     }
   }
@@ -53,11 +53,17 @@ class _MovieDetailsState extends State<MovieDetails> {
         Expanded(
           child: Column(
             children: [
-              Image.network(widget.movie.poster),
+              Image.network(movie.poster),
               Divider(thickness: 3.0),
               SizedBox(height: 20),
               Text(
-                widget.movie.name,
+                movie.name,
+                textAlign: TextAlign.center,
+                style: theme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 20),
+              Text(
+                "(${movie.year})",
                 textAlign: TextAlign.center,
                 style: theme.titleLarge!.copyWith(fontWeight: FontWeight.bold),
               ),
@@ -66,7 +72,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                 child: SingleChildScrollView(
                   controller: descriptionScrollController,
                   child: Text(
-                      widget.movie.description,
+                      movie.description,
                       style: theme.bodyLarge,
                   ),
                 ),
@@ -81,7 +87,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 0),
                     child: Text(
-                      widget.movie.watched
+                      movie.watched
                           ? "To be seen"
                           : "Watched",
                       style: TextStyle(

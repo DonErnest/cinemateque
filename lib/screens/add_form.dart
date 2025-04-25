@@ -62,7 +62,7 @@ class _AddMovieFormState extends State<AddMovieForm> {
   @override
   Widget build(BuildContext context) {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-    return Container(
+    return Container( 
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(16, 16, 16, bottomInset + 16),
       child: SingleChildScrollView(
