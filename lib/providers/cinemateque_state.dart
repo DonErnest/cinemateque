@@ -24,8 +24,11 @@ class _CinematequeStateState extends State<CinematequeState> {
   void updateMovieRating(String movieId, int? rating, bool watched) {
     setState(() {
       final movieIdx = movies.indexWhere((movie) => movie.id == movieId);
-      movies[movieIdx].rating = rating;
-      movies[movieIdx].watched = watched;
+      final existingMovie = movies[movieIdx];
+      final existingMovieCopy = existingMovie.copyWith(
+        rating: rating, watched: watched
+      );
+      movies[movieIdx] = existingMovieCopy;
     });
   }
 

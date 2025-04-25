@@ -40,7 +40,7 @@ class _MovieDetailsState extends State<MovieDetails> {
       );
     } else {
       setState(() {
-        // widget.updateRating(widget.movie.id, null, false);
+        movieProvider.rateMovie(movie.id, null, false);
       });
     }
   }

@@ -46,6 +46,7 @@ class _AddMovieFormState extends State<AddMovieForm> {
         insertedYear != "") {
       setState(() {
         final newMovie = Movie(
+          id: uuid.v4(),
           poster: insertedPoster,
           name: insertedName,
           description: insertedDescription,
